@@ -960,6 +960,18 @@ public enum Message {
     STEP_DOESNT_EXIST("<error>Step &f%step% <error>does not exist."),
     STEP_ALREADY_EXIST("<error>Step &f%step% <error>already started."),
     STEP_DOESNT_STARTED("<error>Step &f%step% <error>doesn't started."),
+
+    // ItemFrame
+    DESCRIPTION_ITEMFRAME("Toggle item frame visibility"),
+    COMMAND_ITEMFRAME_INVISIBLE("<success>Item frame is now <white>invisible<success>."),
+    COMMAND_ITEMFRAME_VISIBLE("<success>Item frame is now <white>visible<success>."),
+    COMMAND_ITEMFRAME_NOT_FOUND("<error>No item frame found. Look at an item frame and try again."),
+
+    // Death Messages
+    DEATH_MESSAGE_GENERIC("#99E0FF%player% &7died."),
+    DEATH_MESSAGE_PLAYER("#99E0FF%player% &7was slain by #34cfe0%killer%&7."),
+    DEATH_MESSAGE_MOB("#99E0FF%player% &7was killed by &c%mob%&7."),
+    DEATH_MESSAGE_MYTHIC_MOB("#99E0FF%player% &7was slain by <gradient:#ff6600:#ff0000>%mob%</gradient>&7!"),
     ;
 
     private EssentialsPlugin plugin;

@@ -79,6 +79,7 @@ import fr.maxlego08.essentials.commands.commands.teleport.CommandTeleportTo;
 import fr.maxlego08.essentials.commands.commands.teleport.CommandTeleportToHere;
 import fr.maxlego08.essentials.commands.commands.teleport.CommandTeleportWorld;
 import fr.maxlego08.essentials.commands.commands.teleport.CommandTop;
+import fr.maxlego08.essentials.commands.commands.utils.CommandItemFrame;
 import fr.maxlego08.essentials.commands.commands.utils.*;
 import fr.maxlego08.essentials.commands.commands.utils.lag.CommandLag;
 import fr.maxlego08.essentials.commands.commands.utils.admins.CommandEnchant;
@@ -283,6 +284,7 @@ public class CommandLoader {
 
         register("pub", CommandPub.class);
         register("step", CommandStep.class);
+        register("itemframe", CommandItemFrame.class, "iframe");
 
         for (RegisterCommand registerCommand : this.commands) {
             try {

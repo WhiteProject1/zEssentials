@@ -14,6 +14,7 @@ import fr.maxlego08.essentials.module.modules.ItemModule;
 import fr.maxlego08.essentials.module.modules.JoinQuitModule;
 import fr.maxlego08.essentials.module.modules.MailBoxModule;
 import fr.maxlego08.essentials.module.modules.MessageModule;
+import fr.maxlego08.essentials.module.modules.DeathMessageModule;
 import fr.maxlego08.essentials.module.modules.RuleModule;
 import fr.maxlego08.essentials.module.modules.SanctionModule;
 import fr.maxlego08.essentials.module.modules.SpawnModule;
@@ -64,6 +65,7 @@ public class ZModuleManager implements ModuleManager {
             this.modules.put(JoinQuitModule.class, new JoinQuitModule(this.plugin));
             this.modules.put(ChatModule.class, new ChatModule(this.plugin));
             this.modules.put(DiscordModule.class, new DiscordModule(this.plugin));
+            this.modules.put(DeathMessageModule.class, new DeathMessageModule(this.plugin));
         }
         this.modules.put(MessageModule.class, new MessageModule(this.plugin));
         this.modules.put(KitModule.class, new KitModule(this.plugin));
