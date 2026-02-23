@@ -278,6 +278,7 @@ public enum Message {
     DESCRIPTION_MESSAGE("Send a private message to a player"),
     DESCRIPTION_REPLY("Reply to a private message"),
     DESCRIPTION_MESSAGE_TOGGLE("Toggle private message"),
+    DESCRIPTION_TP_TOGGLE("Toggle receiving teleport requests"),
     DESCRIPTION_POWER_TOOLS_TOGGLE("Toggle power tools"),
     DESCRIPTION_SOCIALSPY("Display private messages of players"),
     DESCRIPTION_COMPACT_ALL("Compact items in your inventories"),
@@ -685,6 +686,9 @@ public enum Message {
     COMMAND_PAY_TOGGLE_DISABLE("<error>All of your power tools have been disabled &7for &f%player%<error>."),
     COMMAND_POWER_TOOLS_TOGGLE_ENABLE("<success>All of your power tools have been enabled &7for &f%player%<success>."),
     COMMAND_POWER_TOOLS_TOGGLE_DISABLE("&7Pay <error>disable &7for &f%player%<error>."),
+    COMMAND_TELEPORT_REQUEST_DISABLED("<error>The player &f%player%<error> has disabled teleport requests."),
+    COMMAND_TP_TOGGLE_ENABLE("&7Teleport requests <success>enabled &7for &f%player%<success>."),
+    COMMAND_TP_TOGGLE_DISABLE("&7Teleport requests <error>disabled &7for &f%player%<error>."),
 
     COMMAND_FURNACE_TYPE("<error>Impossible to smelt the material &f%material%<error>."),
     COMMAND_FURNACE_ERROR("<error>You have no &f%item%<error> in your inventory."),

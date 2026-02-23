@@ -254,6 +254,9 @@ command-back: "&7Returning to previous location."
 command-back-error: "<error>You have no last location. Impossible to go back."
 command-random-tp-error: "<error>No safe location found after multiple attempts, please try again."
 command-random-tp-configuration-not-found: "<error>Impossible to find the random tp configuration for the world &f%world%<error>."
+command-teleport-request-disabled: "<error>The player &f%player%<error> has disabled teleport requests."
+command-tp-toggle-enable: "&7Teleport requests <success>enabled &7for &f%player%<success>."
+command-tp-toggle-disable: "&7Teleport requests <error>disabled &7for &f%player%<error>."
 
 
 # First join
@@ -379,6 +382,7 @@ description-chat-broadcast: "Broadcast a message"
 description-message: "Send a private message to a player"
 description-reply: "Reply to a private message"
 description-message-toggle: "Toggle private message"
+description-tp-toggle: "Toggle receiving teleport requests"
 description-socialspy: "Display private messages of players"
 description-furnace: "Smelt all the items in your hand"
 description-skull: "Gets the head of a player"

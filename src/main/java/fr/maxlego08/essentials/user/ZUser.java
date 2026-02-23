@@ -146,6 +146,12 @@ public class ZUser extends ZUtils implements User {
             return;
         }
 
+        // Check if target user has disabled teleport requests
+        if (targetUser.getOption(Option.TELEPORT_REQUEST_DISABLE)) {
+            message(this, Message.COMMAND_TELEPORT_REQUEST_DISABLED, targetUser);
+            return;
+        }
+
         this.teleports.entrySet().removeIf(next -> !next.getValue().isValid());
 
         if (this.teleports.containsKey(targetUser.getUniqueId())) {
@@ -178,6 +184,12 @@ public class ZUser extends ZUtils implements User {
 
         if (targetUser.isIgnore(this.uniqueId)) {
             message(this, Message.COMMAND_TELEPORT_IGNORE_PLAYER, targetUser);
+            return;
+        }
+
+        // Check if target user has disabled teleport requests
+        if (targetUser.getOption(Option.TELEPORT_REQUEST_DISABLE)) {
+            message(this, Message.COMMAND_TELEPORT_REQUEST_DISABLED, targetUser);
             return;
         }
 

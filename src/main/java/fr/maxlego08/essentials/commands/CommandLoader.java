@@ -49,6 +49,7 @@ import fr.maxlego08.essentials.commands.commands.messages.CommandMessage;
 import fr.maxlego08.essentials.commands.commands.messages.CommandMessageToggle;
 import fr.maxlego08.essentials.commands.commands.messages.CommandReply;
 import fr.maxlego08.essentials.commands.commands.messages.CommandSocialSpy;
+import fr.maxlego08.essentials.commands.commands.teleport.CommandTpToggle;
 import fr.maxlego08.essentials.commands.commands.sanction.CommandBan;
 import fr.maxlego08.essentials.commands.commands.sanction.CommandFreeze;
 import fr.maxlego08.essentials.commands.commands.sanction.CommandKick;
@@ -232,6 +233,7 @@ public class CommandLoader {
         register("message", CommandMessage.class, "msg", "tell", "whisper", "m", "w");
         register("reply", CommandReply.class, "r");
         register("messagetoggle", CommandMessageToggle.class, "msgtoggle", "mtg");
+        register("tptoggle", CommandTpToggle.class);
         register("socialspy", CommandSocialSpy.class);
 
         register("repair", CommandRepair.class, "fix");

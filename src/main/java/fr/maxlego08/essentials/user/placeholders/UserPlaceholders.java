@@ -203,6 +203,12 @@ public class UserPlaceholders extends ZUtils implements PlaceholderRegister {
             return isPayDisabled ? economyManager.getPayTogglePlaceholderDisabled() : economyManager.getPayTogglePlaceholderEnabled();
         }, "Returns the configured placeholder for the player's pay status");
 
+        // TpToggle
+        placeholder.register("user_is_tptoggle_disabled", (player) -> {
+            User user = iStorage.getUser(player.getUniqueId());
+            return user != null ? String.valueOf(user.getOption(Option.TELEPORT_REQUEST_DISABLE)) : "false";
+        }, "Returns true if the player has disabled teleport requests (tptoggle)");
+
         // Vanish
         placeholder.register("user_is_vanished", (player) -> {
             User user = iStorage.getUser(player.getUniqueId());
