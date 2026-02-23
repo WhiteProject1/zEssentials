@@ -193,6 +193,8 @@ public enum Permission {
     ESSENTIALS_PAY_TOGGLE,
     ESSENTIALS_PAY_TOGGLE_OTHER,
     ESSENTIALS_MESSAGE_TOGGLE_OTHER,
+    ESSENTIALS_TP_TOGGLE("Toggle receiving teleport requests"),
+    ESSENTIALS_TP_TOGGLE_OTHER("Toggle receiving teleport requests for other players"),
     ESSENTIALS_GIVE,
     ESSENTIALS_GIVE_ALL,
     ESSENTIALS_ITEM_LORE_CLEAR,
