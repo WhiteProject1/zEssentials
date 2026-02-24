@@ -2,6 +2,7 @@ package fr.maxlego08.essentials.module.modules;
 
 import fr.maxlego08.essentials.ZEssentialsPlugin;
 import fr.maxlego08.essentials.api.commands.Permission;
+import fr.maxlego08.essentials.api.configuration.NonLoadable;
 import fr.maxlego08.essentials.api.messages.Message;
 import fr.maxlego08.essentials.api.modules.death.DeathMessageType;
 import fr.maxlego08.essentials.api.modules.death.MythicMobsHook;
@@ -32,6 +33,7 @@ public class DeathMessageModule extends ZModule {
     private DeathMessageType deathMessageType = DeathMessageType.DEFAULT;
     private MythicMobsHook mythicMobsHook;
 
+    @NonLoadable
     private final Map<String, List<String>> customMessages = new HashMap<>();
 
     public DeathMessageModule(ZEssentialsPlugin plugin) {
