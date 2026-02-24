@@ -43,6 +43,7 @@ public class ZUser extends ZUtils implements User {
 
     private final EssentialsPlugin plugin;
     private final Map<UUID, TeleportRequest> teleports = new HashMap<>();
+    private final Map<UUID, TeleportRequest> incomingTeleportRequests = new LinkedHashMap<>();
     private final Map<String, Long> cooldowns = new HashMap<>();
     private final UUID uniqueId;
     private final Map<Option, Boolean> options = new HashMap<>();
@@ -53,7 +54,6 @@ public class ZUser extends ZUtils implements User {
     private final Selection selection = new ZSelection();
     private WorldEditTask worldEditTask;
     private String name;
-    private TeleportRequest teleportRequest;
     private User targetUser;
     private BigDecimal targetAmount;
     private Economy targetEconomy;
@@ -251,17 +251,63 @@ public class ZUser extends ZUtils implements User {
 
     @Override
     public TeleportRequest getTeleportRequest() {
-        return teleportRequest;
+        this.incomingTeleportRequests.entrySet().removeIf(entry -> !entry.getValue().isValid());
+        
+        TeleportRequest latestRequest = null;
+        for (TeleportRequest request : this.incomingTeleportRequests.values()) {
+            if (request.isValid()) {
+                latestRequest = request;
+            }
+        }
+        return latestRequest;
     }
 
     @Override
     public void setTeleportRequest(TeleportRequest teleportRequest) {
-        this.teleportRequest = teleportRequest;
+        if (teleportRequest != null) {
+            this.setIncomingTeleportRequest(teleportRequest);
+        }
     }
 
     @Override
     public void removeTeleportRequest(User user) {
         this.teleports.remove(user.getUniqueId());
+    }
+
+    @Override
+    public TeleportRequest getTeleportRequestFrom(User fromUser) {
+        if (fromUser == null) return null;
+        
+        // Cleanup expired requests
+        this.incomingTeleportRequests.entrySet().removeIf(entry -> !entry.getValue().isValid());
+        
+        TeleportRequest request = this.incomingTeleportRequests.get(fromUser.getUniqueId());
+        return (request != null && request.isValid()) ? request : null;
+    }
+
+    @Override
+    public Collection<TeleportRequest> getIncomingTeleportRequests() {
+        this.incomingTeleportRequests.entrySet().removeIf(entry -> !entry.getValue().isValid());
+        
+        return this.incomingTeleportRequests.values().stream()
+                .filter(TeleportRequest::isValid)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void setIncomingTeleportRequest(TeleportRequest teleportRequest) {
+        if (teleportRequest == null) return;
+        
+        this.incomingTeleportRequests.entrySet().removeIf(entry -> !entry.getValue().isValid());
+        
+        UUID fromUserId = teleportRequest.getFromUser().getUniqueId();
+        this.incomingTeleportRequests.put(fromUserId, teleportRequest);
+    }
+
+    @Override
+    public void removeIncomingTeleportRequest(User fromUser) {
+        if (fromUser == null) return;
+        this.incomingTeleportRequests.remove(fromUser.getUniqueId());
     }
 
     @Override
