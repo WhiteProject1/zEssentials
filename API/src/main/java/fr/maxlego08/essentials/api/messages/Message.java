@@ -972,7 +972,8 @@ public enum Message {
 
     // Death Messages
     DEATH_MESSAGE_GENERIC("#99E0FF%player% &7died."),
-    DEATH_MESSAGE_PLAYER("#99E0FF%player% &7was slain by #34cfe0%killer%&7."),
+    DEATH_MESSAGE_PLAYER("#99E0FF%player% &7was slain by #34cfe0%killer% &7using %weapon%&7."),
+    DEATH_MESSAGE_FISTS("&7fists"),
     DEATH_MESSAGE_MOB("#99E0FF%player% &7was killed by &c%mob%&7."),
     DEATH_MESSAGE_MYTHIC_MOB("#99E0FF%player% &7was slain by <gradient:#ff6600:#ff0000>%mob%</gradient>&7!"),
     ;

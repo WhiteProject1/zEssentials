@@ -9,6 +9,8 @@ import fr.maxlego08.essentials.api.modules.death.MythicMobsHook;
 import fr.maxlego08.essentials.module.ZModule;
 import fr.maxlego08.essentials.zutils.utils.paper.PaperComponent;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -21,7 +23,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,21 +85,44 @@ public class DeathMessageModule extends ZModule {
             return;
         }
 
-        String deathMessage = buildDeathMessage(player);
+        EntityDamageEvent lastDamage = player.getLastDamageCause();
+        String deathMessage = buildDeathMessage(player, lastDamage);
         if (deathMessage == null || deathMessage.isEmpty()) {
             return;
         }
 
         PaperComponent paperComponent = (PaperComponent) this.componentMessage;
         var papiMessage = papi(deathMessage, player);
+
+        if (lastDamage instanceof EntityDamageByEntityEvent entityDamageEvent
+                && entityDamageEvent.getDamager() instanceof Player killer) {
+            event.deathMessage(paperComponent.getComponent(papiMessage, buildWeaponResolver(paperComponent, killer, player)));
+            return;
+        }
+
         event.deathMessage(paperComponent.getComponent(papiMessage));
     }
 
-    private String buildDeathMessage(Player player) {
-        EntityDamageEvent lastDamage = player.getLastDamageCause();
+    private TagResolver buildWeaponResolver(PaperComponent paperComponent, Player killer, Player victim) {
+        ItemStack weapon = killer.getInventory().getItemInMainHand();
+        boolean isAir = weapon.getType().isAir();
+
+        Component weaponComponent;
+        if (isAir) {
+            weaponComponent = paperComponent.getComponent(papi(getMessage(Message.DEATH_MESSAGE_FISTS), victim));
+        } else if (weapon.hasItemMeta() && weapon.getItemMeta().hasDisplayName()) {
+            weaponComponent = weapon.getItemMeta().displayName().hoverEvent(weapon.asHoverEvent());
+        } else {
+            weaponComponent = Component.translatable(weapon).hoverEvent(weapon.asHoverEvent());
+        }
+
+        return Placeholder.component("zessentials_weapon", weaponComponent);
+    }
+
+    private String buildDeathMessage(Player player, EntityDamageEvent lastDamage) {
 
         if (lastDamage == null) {
-            return getCustomOrDefaultMessage("GENERIC", player, null, null, null);
+            return getCustomOrDefaultMessage("GENERIC", player, null, null, null, null);
         }
 
         EntityDamageEvent.DamageCause cause = lastDamage.getCause();
@@ -107,38 +131,32 @@ public class DeathMessageModule extends ZModule {
             Entity damager = entityDamageEvent.getDamager();
 
             if (damager instanceof Player killer) {
-                return getPlayerKillMessage(player, killer);
+                return getCustomOrDefaultMessage("PLAYER", player, killer.getName(), null, "PLAYER", "<zessentials_weapon>");
             }
 
             if (this.mythicMobsHook != null && this.mythicMobsHook.isMythicMob(damager)) {
                 Optional<String> mobName = this.mythicMobsHook.getMythicMobName(damager);
-                return getCustomOrDefaultMessage("MYTHIC_MOB", player, null, mobName.orElse("Unknown"), cause.name());
+                return getCustomOrDefaultMessage("MYTHIC_MOB", player, null, mobName.orElse("Unknown"), cause.name(), null);
             }
 
             if (damager instanceof LivingEntity livingEntity) {
                 String mobName = getMobName(livingEntity);
-                return getCustomOrDefaultMessage("MOB", player, null, mobName, cause.name());
+                return getCustomOrDefaultMessage("MOB", player, null, mobName, cause.name(), null);
             }
         }
 
         String customMessage = getCustomMessage(cause.name());
         if (customMessage != null) {
-            return formatMessage(customMessage, player, null, null, cause.name());
+            return formatMessage(customMessage, player, null, null, cause.name(), null);
         }
 
-        return getCustomOrDefaultMessage("GENERIC", player, null, null, cause.name());
+        return getCustomOrDefaultMessage("GENERIC", player, null, null, cause.name(), null);
     }
 
-    private String getPlayerKillMessage(Player victim, Player killer) {
-        ItemStack weapon = killer.getInventory().getItemInMainHand();
-        String weaponName = weapon.getType().isAir() ? "fists" : getItemName(weapon);
-        return getCustomOrDefaultMessage("PLAYER", victim, killer.getName(), weaponName, "PLAYER");
-    }
-
-    private String getCustomOrDefaultMessage(String type, Player player, String killer, String mob, String cause) {
+    private String getCustomOrDefaultMessage(String type, Player player, String killer, String mob, String cause, String weapon) {
         String customMessage = getCustomMessage(type);
         if (customMessage != null) {
-            return formatMessage(customMessage, player, killer, mob, cause);
+            return formatMessage(customMessage, player, killer, mob, cause, weapon);
         }
 
         Message defaultMessage = switch (type) {
@@ -149,7 +167,7 @@ public class DeathMessageModule extends ZModule {
         };
 
         String message = getMessage(defaultMessage);
-        return formatMessage(message, player, killer, mob, cause);
+        return formatMessage(message, player, killer, mob, cause, weapon);
     }
 
     private String getCustomMessage(String cause) {
@@ -160,7 +178,7 @@ public class DeathMessageModule extends ZModule {
         return null;
     }
 
-    private String formatMessage(String message, Player player, String killer, String mob, String cause) {
+    private String formatMessage(String message, Player player, String killer, String mob, String cause, String weapon) {
         message = message.replace("%player%", player.getName());
         message = message.replace("%displayName%", player.getDisplayName());
         if (killer != null) {
@@ -171,6 +189,9 @@ public class DeathMessageModule extends ZModule {
         }
         if (cause != null) {
             message = message.replace("%cause%", formatCause(cause));
+        }
+        if (weapon != null) {
+            message = message.replace("%weapon%", weapon);
         }
         return message;
     }
@@ -187,10 +208,4 @@ public class DeathMessageModule extends ZModule {
         return name(entity.getType().name());
     }
 
-    private String getItemName(ItemStack item) {
-        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-            return item.getItemMeta().getDisplayName();
-        }
-        return name(item.getType().name());
-    }
 }
