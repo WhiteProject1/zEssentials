@@ -189,8 +189,12 @@ public class PlayerListener extends ZUtils implements Listener {
         User user = this.plugin.getUser(player.getUniqueId());
         if (user != null) user.startCurrentSessionPlayTime();
 
-        if (user != null && user.isFirstJoin() && ConfigStorage.spawnLocation != null && ConfigStorage.spawnLocation.isValid()) {
-            this.plugin.getScheduler().teleportAsync(player, ConfigStorage.spawnLocation.getLocation());
+        if (user != null && user.isFirstJoin()) {
+            if (ConfigStorage.firstSpawnLocation != null && ConfigStorage.firstSpawnLocation.isValid()) {
+                this.plugin.getScheduler().teleportAsync(player, ConfigStorage.firstSpawnLocation.getLocation());
+            } else if (ConfigStorage.spawnLocation != null && ConfigStorage.spawnLocation.isValid()) {
+                this.plugin.getScheduler().teleportAsync(player, ConfigStorage.spawnLocation.getLocation());
+            }
         }
 
         if (user != null && user.getOption(Option.VANISH)) {
