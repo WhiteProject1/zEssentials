@@ -68,7 +68,7 @@ public class SpawnModule extends ZModule {
                 if (listener instanceof SpawnModule spawnModule && event instanceof PlayerJoinEvent playerJoinEvent) {
                     var player = playerJoinEvent.getPlayer();
                     if (ConfigStorage.spawnLocation != null && ConfigStorage.spawnLocation.isValid()) {
-                        player.teleport(ConfigStorage.spawnLocation.getLocation());
+                        plugin.getScheduler().teleportAsync(player, ConfigStorage.spawnLocation.getLocation());
                     }
                 }
             }, this.plugin);
@@ -139,9 +139,9 @@ public class SpawnModule extends ZModule {
         if (!this.isEnable) return;
 
         if (ConfigStorage.firstSpawnLocation != null && ConfigStorage.firstSpawnLocation.isValid()) {
-            player.teleport(ConfigStorage.firstSpawnLocation.getLocation());
+            plugin.getScheduler().teleportAsync(player, ConfigStorage.firstSpawnLocation.getLocation());
         } else if (ConfigStorage.spawnLocation != null && ConfigStorage.spawnLocation.isValid()) {
-            player.teleport(ConfigStorage.spawnLocation.getLocation());
+            plugin.getScheduler().teleportAsync(player, ConfigStorage.spawnLocation.getLocation());
         }
     }
 }

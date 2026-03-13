@@ -27,7 +27,7 @@ public class CommandTop extends VCommand {
             location.setPitch(this.player.getLocation().getPitch());
             location.setYaw(this.player.getLocation().getYaw());
             location.add(0.5, 0, 0.5);
-            this.player.teleport(location);
+            plugin.getScheduler().teleportAsync(this.player, location);
             message(this.sender, Message.COMMAND_TOP);
         } else {
 
