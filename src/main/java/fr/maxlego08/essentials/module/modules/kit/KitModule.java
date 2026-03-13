@@ -14,7 +14,7 @@ import fr.maxlego08.menu.api.requirement.Action;
 import fr.maxlego08.menu.api.utils.Loader;
 import fr.maxlego08.menu.api.utils.TypedMapAccessor;
 import fr.maxlego08.menu.loader.MenuItemStackLoader;
-import fr.maxlego08.menu.zcore.utils.itemstack.MenuItemStackFromItemStack;
+import fr.maxlego08.menu.common.utils.itemstack.MenuItemStackFromItemStack;
 import org.apache.logging.log4j.util.Strings;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;

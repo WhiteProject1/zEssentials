@@ -45,11 +45,9 @@ public class ButtonKitGet extends Button {
     }
 
     @Override
-    public ItemStack getCustomItemStack(Player player) {
-        Placeholders placeholders = new Placeholders();
-
+    public ItemStack getCustomItemStack(Player player, boolean useCache, Placeholders placeholders) {
         Optional<Kit> optional = this.plugin.getKit(this.kitName);
-        if (optional.isEmpty()) return super.getCustomItemStack(player);
+        if (optional.isEmpty()) return super.getCustomItemStack(player, useCache, placeholders);
         Kit kit = optional.get();
 
         placeholders.register("cooldown", TimerBuilder.getStringTime(kit.getCooldown() * 1000));

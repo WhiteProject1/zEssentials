@@ -23,16 +23,15 @@ public class ButtonVaultOpenAdmin extends Button {
     }
 
     @Override
-    public ItemStack getCustomItemStack(Player player) {
+    public ItemStack getCustomItemStack(Player player, boolean useCache, Placeholders placeholders) {
         PlayerVaults viewerVaults = this.plugin.getVaultManager().getPlayerVaults(player);
         PlayerVaults targetVaults = viewerVaults.getTargetPlayerVaults();
-        if (targetVaults == null) return this.getItemStack().build(player, false, new Placeholders());
+        if (targetVaults == null) return this.getItemStack().build(player, false, placeholders);
 
         Vault targetVault = targetVaults.getVault(this.vaultId);
         Vault currentVault = viewerVaults.getTargetVault();
 
         var itemstack = this.getItemStack();
-        Placeholders placeholders = new Placeholders();
         var vaultManager = plugin.getVaultManager();
 
         var vaultItemStack = targetVault.getIconItemStack();

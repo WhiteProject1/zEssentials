@@ -7,6 +7,7 @@ group "NMS:V1_21_8"
 dependencies {
     compileOnly(project(":API"))
     paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
+    compileOnly("net.kyori:adventure-text-serializer-ansi:4.24.0")
 }
 
 paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.REOBF_PRODUCTION

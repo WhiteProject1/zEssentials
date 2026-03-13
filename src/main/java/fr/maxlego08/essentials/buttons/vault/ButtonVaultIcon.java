@@ -20,14 +20,13 @@ public class ButtonVaultIcon extends Button {
     }
 
     @Override
-    public ItemStack getCustomItemStack(Player player) {
+    public ItemStack getCustomItemStack(Player player, boolean useCache, Placeholders placeholders) {
 
         PlayerVaults playerVaults = plugin.getVaultManager().getPlayerVaults(player);
         Vault vault = playerVaults.getTargetVault();
-        if (vault == null) return super.getCustomItemStack(player);
+        if (vault == null) return super.getCustomItemStack(player, useCache, placeholders);
 
         var itemstack = this.getItemStack();
-        Placeholders placeholders = new Placeholders();
         var vaultManager = plugin.getVaultManager();
 
         var vaultItemStack = vault.getIconItemStack();

@@ -24,16 +24,15 @@ public class ButtonSanctionInformation extends Button {
     }
 
     @Override
-    public ItemStack getCustomItemStack(Player player) {
+    public ItemStack getCustomItemStack(Player player, boolean useCache, Placeholders placeholders) {
 
         User user = this.plugin.getUser(player.getUniqueId());
-        if (user == null) return super.getCustomItemStack(player);
+        if (user == null) return super.getCustomItemStack(player, useCache, placeholders);
 
         User targetuser = user.getTargetUser();
-        if (targetuser == null) return super.getCustomItemStack(player);
+        if (targetuser == null) return super.getCustomItemStack(player, useCache, placeholders);
 
         MenuItemStack menuItemStack = this.getItemStack();
-        Placeholders placeholders = new Placeholders();
 
         placeholders.register("target", targetuser.getName());
         placeholders.register("is_ban", String.valueOf(targetuser.getOption(Option.BAN)));

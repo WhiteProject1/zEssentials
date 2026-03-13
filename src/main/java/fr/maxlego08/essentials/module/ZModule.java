@@ -44,6 +44,9 @@ public abstract class ZModule extends YamlLoader implements Module {
         this.name = name;
     }
 
+    public void onDisable() {
+    }
+
     @Override
     public void loadConfiguration() {
 

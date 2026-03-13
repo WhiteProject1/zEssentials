@@ -50,16 +50,14 @@ public class ButtonKitSubCategorySelector extends Button {
     }
 
     @Override
-    public ItemStack getCustomItemStack(Player player) {
-        Placeholders placeholders = new Placeholders();
-        
+    public ItemStack getCustomItemStack(Player player, boolean useCache, Placeholders placeholders) {
         KitModule kitModule = this.plugin.getModuleManager().getModule(KitModule.class);
         List<Kit> kits = kitModule.getKitsBySubCategory(player, this.categoryName, this.subCategoryName);
-        
+
         placeholders.register("category", this.categoryName);
         placeholders.register("subcategory", this.subCategoryName);
         placeholders.register("kit_count", String.valueOf(kits.size()));
-        
+
         return this.getItemStack().build(player, false, placeholders);
     }
 
