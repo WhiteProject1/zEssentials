@@ -68,7 +68,11 @@ public class SpawnModule extends ZModule {
                 if (listener instanceof SpawnModule spawnModule && event instanceof PlayerJoinEvent playerJoinEvent) {
                     var player = playerJoinEvent.getPlayer();
                     if (ConfigStorage.spawnLocation != null && ConfigStorage.spawnLocation.isValid()) {
-                        plugin.getScheduler().teleportAsync(player, ConfigStorage.spawnLocation.getLocation());
+                        plugin.getScheduler().runAtEntityLater(player, () -> {
+                            if (player.isOnline()) {
+                                plugin.getScheduler().teleportAsync(player, ConfigStorage.spawnLocation.getLocation());
+                            }
+                        }, 1L);
                     }
                 }
             }, this.plugin);
