@@ -241,6 +241,7 @@ public class HologramModule extends ZModule implements HologramManager {
 
         try {
             Hologram hologram = loader.load(configuration, "", file.getName().replace(".yml", ""));
+            if (hologram == null) return;
             if (hologram.canLoad()) {
                 hologram.create();
                 hologram.createForAllPlayers();
