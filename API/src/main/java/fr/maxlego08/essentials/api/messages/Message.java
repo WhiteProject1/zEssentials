@@ -419,6 +419,9 @@ public enum Message {
 
     TELEPORT_DAMAGE("<error>You must not take damage during teleportation."),
     TELEPORT_ERROR_LOCATION("<error>Unable to teleport you safely."),
+    TELEPORT_CROSS_SERVER_NOT_SUPPORTED("<error>Cross-server teleportation is not supported without Redis."),
+    TELEPORT_CROSS_SERVER_CONNECTING("<success>Connecting to server <white>%server%<success>..."),
+    TELEPORT_CROSS_SERVER_PLAYER_NOT_FOUND("<error>Player <white>%player% <error>was not found on any server."),
     
     // RTP Queue System Messages
     TELEPORT_ALREADY_IN_QUEUE("<error>You are already in the teleportation queue!"),
